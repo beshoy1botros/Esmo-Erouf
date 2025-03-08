@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>اسمو ايروف - حفظ الألحان</title>
+    <link rel="manifest" href="version.json" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- خلفية الجزيئات -->
+    <div id="particles"></div>
+
+    <!-- شريط التنقل -->
+    <nav>
+      <div class="logo">اسمو ايروف</div>
+      <div class="nav-buttons">
+        <button onclick="showSection('home')">الرئيسية</button>
+        <button onclick="showSection('register')">حساب جديد</button>
+        <button onclick="showSection('login')">تسجيل الدخول</button>
+      </div>
+    </nav>
+
+    <!-- قسم الرئيسية -->
+    <section id="home">
+      <div class="overlay"></div>
+      <div class="content">
+        <h1>كل نسمة فلتسبح الرب. (مز ٦:١٥٠)</h1>
+        <p>
+          أهلاً بيك يا صديقي، يارب تكون بخير.<br />
+          قبل ما تبدأ اتمنى منك الالتزام، عشان نسمع صوتك الحلو في كنيستنا
+          الجميلة.<br />
+          وجودك منورنا.
+        </p>
+        <button class="btn" onclick="showSection('register')">
+          انطلق يا صديقي!
+        </button>
+      </div>
+    </section>
+
+    <!-- قسم تسجيل الدخول -->
+    <section id="login" class="hidden">
+      <div class="form-container">
+        <h2>تسجيل الدخول</h2>
+        <!-- تم حذف حقل البريد الإلكتروني -->
+        <input
+          type="text"
+          id="loginName"
+          placeholder="اكتب اسمك الكامل (ثلاثي)"
+        />
+        <input
+          type="password"
+          id="loginPassword"
+          placeholder="اكتب كلمة السر"
+        />
+        <select id="loginPhase" onchange="resetLoginLevel()">
+          <option value="">اختر المرحلة</option>
+          <option value="حضانة">حضانة</option>
+          <option value="اولي وتانيه">اولي وتانيه</option>
+          <option value="تالته ورابعه">تالته ورابعه</option>
+          <option value="خامسة وسادسه">خامسة وسادسه</option>
+          <option value="اعدادي">اعدادي</option>
+          <option value="ثانوي">ثانوي</option>
+          <option value="جامعة">جامعة</option>
+        </select>
+        <select id="loginLevel">
+          <option value="">اختر المستوى</option>
+        </select>
+        <div id="loginMsg" style="margin-bottom: 10px"></div>
+        <button class="btn" onclick="handleLogin()">دخول</button>
+        <p style="margin-top: 10px">
+          ليس لديك حساب؟
+          <a href="#" onclick="showSection('register')" style="color: #ffeb3b"
+            >سجل الآن</a
+          >
+        </p>
+      </div>
+    </section>
+
+    <!-- قسم إنشاء الحساب -->
+    <section id="register" class="hidden">
+      <div class="form-container">
+        <h2>إنشاء حساب جديد</h2>
+        <!-- تم حذف حقل البريد الإلكتروني -->
+        <input
+          type="text"
+          id="regName"
+          placeholder="اكتب اسمك الكامل (ثلاثي)"
+        />
+        <select id="regPhase" onchange="populateRegLevel()">
+          <option value="">اختر المرحلة</option>
+          <option value="حضانة">حضانة</option>
+          <option value="اولي وتانيه">اولي وتانيه</option>
+          <option value="تالته ورابعه">تالته ورابعه</option>
+          <option value="خامسة وسادسه">خامسة وسادسه</option>
+          <option value="اعدادي">اعدادي</option>
+          <option value="ثانوي">ثانوي</option>
+          <option value="جامعة">جامعة</option>
+        </select>
+        <select id="regLevel">
+          <option value="">اختر المستوى</option>
+        </select>
+        <input type="password" id="regPassword" placeholder="أنشئ كلمة سر" />
+        <input
+          type="password"
+          id="regConfirmPassword"
+          placeholder="أكد كلمة السر"
+        />
+        <div id="regMsg" style="margin-bottom: 10px"></div>
+        <button class="btn" onclick="handleSignup()">تسجيل</button>
+        <p style="margin-top: 10px">
+          لديك حساب بالفعل؟
+          <a href="#" onclick="showSection('login')" style="color: #ffeb3b"
+            >سجل دخول</a
+          >
+        </p>
+      </div>
+    </section>
+
+    <!-- قسم الألحان (الفيديوهات) -->
+    <section id="videosPage" class="hidden">
+      <div class="content" style="padding-top: 50px">
+        <h2 id="userGreeting"></h2>
+        <div class="video-grid" id="videosContainer"></div>
+      </div>
+    </section>
+
+    <!-- تذييل الصفحة -->
+    <footer>
+      <p>© <span id="year"></span> جميع الحقوق محفوظة</p>
+      <p>تم التطوير بواسطة م/بيشوي بطرس</p>
+    </footer>
+
+    <!-- زر الرجوع للأعلى -->
+    <button id="backToTop" class="hidden" onclick="scrollToTop()">↑</button>
+
+    <script src="script.js"></script>
+  </body>
+</html>
