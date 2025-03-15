@@ -107,7 +107,6 @@ const hymnNamesByHodana = {
     "لحن خين افران (التمجيد)",
   ],
 };
-
 const hymnNamesOwlaya = {
   "المستوي الاول": [
     "الليلويا فاي بيه بي",
@@ -170,12 +169,12 @@ const hymnNamesKhamissa = {
 const hymnNamesEadadi = {
   "المستوي الاول": [
     "ابصالية الاحد(ايكوتي) كاملة",
-    "قطعة توزيع عيد العنصرة وصوم الاباء الرسل (اسومين) كاملا يوناني+ قبطي+ عربي",
+    "قطعة توزيع عيد العنصرة وصوم الاباء الرسل (اسومين) كاملا يوناني+قبطي+عربي",
     "المزمور السنوي المختصر",
-    "اسبسمس الادام (اونوف اممو ماريا)قبطي كاملا",
+    "اسبسمس الادام (اونوف اممو ماريا) قبطي كاملا",
   ],
   "المستوي الثاني": [
-    "لحن اوندوس(المقدمة+ ابوخروؤ+ اري ابريسفيفين+ طوبه ام ابتشويس للرسل)",
+    "لحن اوندوس(المقدمة+ابوخروؤ+اري ابريسفيفين+طوبه ام ابتشويس للرسل)",
     "ابصالية الثلاثة فتية(اربصالين)",
     "اسبسمس ادام عربي للرسل(اباؤنا الرسل)",
     "طواف عشية + طواف باكر السنوي",
@@ -195,7 +194,7 @@ const hymnNamesThanawee = {
   ],
   "المستوي الثاني": [
     "تين اويه انسوك السنوي",
-    "محير(افناف امبي اسمو)للعذراء",
+    "محير(افناف امبي اسمو) للعذراء",
     "ذوكصولوجية باكر",
     "اوندوس",
   ],
@@ -259,21 +258,21 @@ const videoCounts = {
 const videoURLs = {
   حضانة: {
     "المستوي الاول": [
-      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+      "https://www.youtube.com/watch?v=jFO2dlI7yyU",
+      "https://www.youtube.com/watch?v=SOXEIj43DVg",
+      "https://www.youtube.com/watch?v=iIVPPPayfYk",
       "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
     ],
     "المستوي الثاني": [
-      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
-      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
-      "http://techslides.com/demos/sample-videos/small.mp4",
+      "https://www.youtube.com/watch?v=s9dP-j8u7u0",
+      "https://www.youtube.com/watch?v=oa3dTfPzRNU",
+      "https://www.youtube.com/watch?v=YWqBsxHXIgw",
+      "https://www.youtube.com/watch?v=zMG1DkU-zng",
     ],
     الموهوبين: [
-      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
-      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
-      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      "https://www.youtube.com/watch?v=ivRDyjwad3I",
+      "https://www.youtube.com/watch?v=iOJbe7u5CQQ",
+      "https://www.youtube.com/watch?v=cVjvecHRWkc",
     ],
   },
   "اولي وتانيه": {
@@ -387,8 +386,14 @@ const videoURLs = {
 /***** دوال التنقل وعرض الفيديوهات *****/
 function showSection(sectionId) {
   currentSection = sectionId;
-  document.querySelectorAll("section").forEach((sec) => sec.classList.add("hidden"));
-  document.getElementById(sectionId).classList.remove("hidden");
+  document.querySelectorAll("section").forEach((sec) => {
+    sec.classList.add("hidden");
+    sec.classList.remove("animate__animated", "animate__fadeIn");
+  });
+  const section = document.getElementById(sectionId);
+  section.classList.remove("hidden");
+  // إضافة حركة ظهور احترافية باستخدام Animate.css
+  section.classList.add("animate__animated", "animate__fadeIn");
   if (sectionId === "videosPage") {
     updateUserGreeting();
     displayVideos();
@@ -436,9 +441,7 @@ function displayVideos() {
     }
     let extraParagraph = "";
     if (phase !== "حضانة" && phase !== "اولي وتانيه") {
-      extraParagraph = `<p>${
-        uniqueTexts[index] || "هذا هو الوصف الخاص بالفيديو رقم " + (index + 1)
-      }</p>`;
+      extraParagraph = `<p>${uniqueTexts[index] || "هذا هو الوصف الخاص بالفيديو رقم " + (index + 1)}</p>`;
     }
     card.innerHTML = `
       <div class="video-header">
@@ -548,40 +551,50 @@ function resetLoginLevel() {
 
 /***** دوال التسجيل وتسجيل الدخول *****/
 function handleSignup() {
-    const name = document.getElementById("regName").value.trim();
-    const phase = document.getElementById("regPhase").value;
-    const level = document.getElementById("regLevel").value;
-    const password = document.getElementById("regPassword").value;
-    const confirmPassword = document.getElementById("regConfirmPassword").value;
-    const regMsg = document.getElementById("regMsg");
-    regMsg.textContent = "";
-    if (!name || !phase || !level || !password || !confirmPassword) {
-      regMsg.textContent = "لازم تملي كل الخانات";
-      regMsg.style.color = "red";
-      return;
-    }
-    if (!isThreePartName(name)) {
-      regMsg.textContent = "يجب أن يكون الاسم الكامل ثلاثي.";
-      regMsg.style.color = "red";
-      return;
-    }
-    // تم إزالة شرط التحقق من صحة كلمة السر هنا
-    if (password !== confirmPassword) {
-      regMsg.textContent = "الكلمتين مش زي بعض";
-      regMsg.style.color = "red";
-      return;
-    }
-    userData = { name, password, phase, level };
-    localStorage.setItem("userData", JSON.stringify(userData));
-    regMsg.textContent = "تم التسجيل بنجاح!";
-    regMsg.style.color = "green";
-    setTimeout(() => {
-      loggedInUser = { name, phase, level };
-      localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
-      showSection("videosPage");
-    }, 1000);
+  const name = document.getElementById("regName").value.trim();
+  const phase = document.getElementById("regPhase").value;
+  const level = document.getElementById("regLevel").value;
+  const password = document.getElementById("regPassword").value;
+  const confirmPassword = document.getElementById("regConfirmPassword").value;
+  const regMsg = document.getElementById("regMsg");
+  regMsg.textContent = "";
+  if (!name || !phase || !level || !password || !confirmPassword) {
+    regMsg.textContent = "لازم تملي كل الخانات";
+    regMsg.style.color = "red";
+    return;
   }
-  
+  if (!isThreePartName(name)) {
+    regMsg.textContent = "يجب أن يكون الاسم الكامل ثلاثي.";
+    regMsg.style.color = "red";
+    return;
+  }
+  if (password !== confirmPassword) {
+    regMsg.textContent = "الكلمتين مش زي بعض";
+    regMsg.style.color = "red";
+    return;
+  }
+  userData = { name, password, phase, level };
+  localStorage.setItem("userData", JSON.stringify(userData));
+  regMsg.textContent = "تم التسجيل بنجاح!";
+  regMsg.style.color = "green";
+
+  // إرسال بيانات التسجيل إلى الخادم (Backend)
+  fetch("/api/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, password, phase, level }),
+  })
+    .then((response) => response.json())
+    .then((data) => console.log("Backend register:", data))
+    .catch((error) => console.error("Error in registration:", error));
+
+  setTimeout(() => {
+    loggedInUser = { name, phase, level };
+    localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
+    showSection("videosPage");
+  }, 1000);
+}
+
 function handleLogin() {
   const name = document.getElementById("loginName").value.trim();
   const password = document.getElementById("loginPassword").value;
@@ -599,26 +612,33 @@ function handleLogin() {
     loginMsg.style.color = "red";
     return;
   }
-  // لا يتم التحقق من صحة كلمة السر في فورم الدخول
-  const storedData = localStorage.getItem("userData");
-  if (!storedData) {
-    loginMsg.textContent = "لا يوجد حساب مسجل بعد. سجل أولاً في (حساب جديد).";
-    loginMsg.style.color = "red";
-    return;
-  }
-  const storedUser = JSON.parse(storedData);
-  if (name === storedUser.name && password === storedUser.password) {
-    loginMsg.textContent = "تم تسجيل الدخول بنجاح!";
-    loginMsg.style.color = "green";
-    setTimeout(() => {
-      loggedInUser = { name, phase, level };
-      localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
-      showSection("videosPage");
-    }, 1000);
-  } else {
-    loginMsg.textContent = "الاسم أو كلمة السر غير صحيحة.";
-    loginMsg.style.color = "red";
-  }
+
+  // إرسال بيانات الدخول إلى الخادم (Backend)
+  fetch("/api/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, password }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.user) {
+        loginMsg.textContent = "تم تسجيل الدخول بنجاح!";
+        loginMsg.style.color = "green";
+        setTimeout(() => {
+          loggedInUser = { name, phase, level };
+          localStorage.setItem("loggedInUser", JSON.stringify(loggedInUser));
+          showSection("videosPage");
+        }, 1000);
+      } else {
+        loginMsg.textContent = data.error || "الاسم أو كلمة السر غير صحيحة.";
+        loginMsg.style.color = "red";
+      }
+    })
+    .catch((error) => {
+      loginMsg.textContent = "حدث خطأ في الخادم.";
+      loginMsg.style.color = "red";
+      console.error("Login error:", error);
+    });
 }
 
 function handleLogout() {
@@ -648,7 +668,7 @@ function getVisibleVideos() {
 }
 
 /***** فحص التحديثات *****/
-const CURRENT_VERSION = "1.0.2";
+const CURRENT_VERSION = "1.0.3";
 function checkForUpdates() {
   fetch("/version.json", { cache: "no-cache" })
     .then((response) => response.json())
@@ -665,19 +685,6 @@ function checkForUpdates() {
 // ضبط فاصل التحقق من التحديثات كل دقيقة
 setInterval(checkForUpdates, 60000);
 checkForUpdates();
-
-/***** زر الرجوع للأعلى *****/
-window.addEventListener("scroll", () => {
-  const btn = document.getElementById("backToTop");
-  if (window.scrollY > 300) {
-    btn.classList.remove("hidden");
-  } else {
-    btn.classList.add("hidden");
-  }
-});
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
 
 /***** تذييل الصفحة *****/
 document.getElementById("year").textContent = new Date().getFullYear();
